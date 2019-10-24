@@ -1,5 +1,5 @@
 =
-{name -> recupsite1}			#action de recuperation du 1er site
+{name -> recupsite1}
 {url -> test.fr}
 +
 {max-depth -> 0}
