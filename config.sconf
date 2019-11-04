@@ -1,12 +1,12 @@
 =
-{name -> recupsite1}
-{url -> test.fr}
+{name -> recupsite1}            #action de recup du site
+{ur -> test.fr}
 +
 {max-depth -> 0}
 
 =
 {name -> recupsite2}			#action de recuperation du 1er site
-{url -> test.fr}
+{url -> test2.fr}
 +
 {option1 -> 0}
 

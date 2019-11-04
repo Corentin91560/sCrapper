@@ -68,11 +68,11 @@ int main()
 
         validateRead = readFile(action, tache, nbrAction, nbrTache, data, fileLength);
         if (validateRead == 0) {
-            printf("Error in the file, make sure you have enter good information");
+            printf("Error in the file, make sure you have enter good information\n");
             return 0;
         }
         else {
-            printf("File is good");
+            printf("File is good\n");
         }
     }
 
@@ -107,13 +107,15 @@ int readFile (Action *action, Tache *tache, int nbrAction, int nbrTache, char *d
     int counter = 0;
         /* Récupère les noms des actions */
         for (int i = 0; i < fileLength; i++) {
+            //printf("%c", data[i]);
             if (data[i] == '#') {
-                while (data[i+1] != '\n') {
+                while (data[i] != '\n') {
                     i++;
                 }
             }
             else {
                 //printf("%c", data[i]);
+                /* Détermine le premier caractère à lire */
                 if (occurence == 0) {
                     if (data[i] == '=') {
                         occurence = 1;
@@ -136,23 +138,61 @@ int readFile (Action *action, Tache *tache, int nbrAction, int nbrTache, char *d
                     //printf("%c\n", data[i]);
                     if (data[i] == '{') {
                         i++;
+                        /* Lecture du nom et du site web*/
                         if (data[i] == 'n' && data[i+1] == 'a' && data[i+2] == 'm' && data[i+3] == 'e' && data[i+4] == ' ' && data[i+5] == '-' && data[i+6] == '>' && data[i+7] == ' ') {
                             i += 8;
                             int allocName = 0;
                             int j = i;
-                            while (data[j+1] != '}') {
+                            while (data[j] != '}') {
                                 j++;
+                                if (data[j] == '\n') {
+                                    return 0;
+                                }
                             }
                             allocName = j - i;
-                            action[counter].nameAction = malloc(allocName * sizeof(char));
+                            action[counter].nameAction = malloc((allocName + 1) * sizeof(char));
                             int k = 0;
-                            while (data[i] != '}') {
+                            while (allocName != k) {
                                 action[counter].nameAction[k] = data[i];
                                 k++;
                                 i++;
                             }
-                            printf("%s\n", action[counter].nameAction);
-                            counter++;
+                            action[counter].nameAction[allocName] = '\0';
+
+                            while (data[i] != '\n') {
+                                i++;
+                            }
+                            /* On se place au début de la ligne qui contient l'URL */
+                            i+=2;
+
+                            /* Verification de la présence de l'URL */
+                            if (data[i] == 'u' && data[i+1] == 'r' && data[i+2] == 'l' && data[i+3] == ' ' && data[i+4] == '-' && data[i+5] == '>' && data[i+6] == ' ') {
+                                printf ("IN");
+                                i += 8;
+                                int allocURL = 0;
+                                j = i;
+                                while (data[j] != '}') {
+                                    j++;
+                                    if (data[j] == '\n') {
+                                        return 0;
+                                    }
+                                }
+                                allocURL = j - i;
+                                action[counter].urlAction = malloc((allocURL + 1) * sizeof(char));
+                                k = 0;
+                                while (allocURL != k) {
+                                    action[counter].urlAction[k] = data[i];
+                                    k++;
+                                    i++;
+                                }
+                                action[counter].urlAction[allocURL + 1] = '\0';
+
+                                counter++;
+                            }
+                            else {
+                                printf("Error, the url section of the action number %d is incorrect (make sure the line is correct {url -> site.com})\n", counter + 1);
+                                return 0;
+                            }
                         }
                     }
                 }
