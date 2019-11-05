@@ -1,5 +1,45 @@
 # depslib dependency file v1.0
-1572882689 source:c:\users\balsa\desktop\projet scrapper\scrapper\main.c
+1572962015 source:c:\users\balsa\desktop\projet scrapper\scrapper\main.c
 	<stdio.h>
 	<stdlib.h>
+	<curl/curl.h>
+
+1568023396 c:\users\balsa\desktop\projet scrapper\scrapper\curl\curl.h
+	"curlver.h"
+	"system.h"
+	<stdio.h>
+	<limits.h>
+	<osreldate.h>
+	<sys/types.h>
+	<time.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<sys/select.h>
+	<sys/socket.h>
+	<sys/time.h>
+	<support/SupportDefs.h>
+	"easy.h"
+	"multi.h"
+	"urlapi.h"
+	"typecheck-gcc.h"
+
+1568173746 c:\users\balsa\desktop\projet scrapper\scrapper\curl\curlver.h
+
+1568023396 c:\users\balsa\desktop\projet scrapper\scrapper\curl\system.h
+	<winsock2.h>
+	<windows.h>
+	<ws2tcpip.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<sys/poll.h>
+
+1568023396 c:\users\balsa\desktop\projet scrapper\scrapper\curl\easy.h
+
+1568023396 c:\users\balsa\desktop\projet scrapper\scrapper\curl\multi.h
+	"curl.h"
+
+1568023396 c:\users\balsa\desktop\projet scrapper\scrapper\curl\urlapi.h
+	"curl.h"
+
+1568023396 c:\users\balsa\desktop\projet scrapper\scrapper\curl\typecheck-gcc.h
 

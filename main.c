@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <curl/curl.h>
+
 struct Action {
     char *nameAction;
     char *urlAction;
@@ -73,6 +75,36 @@ int main()
         }
         else {
             printf("File is good\n");
+            CURL *curl;
+            CURLcode res;
+            FILE *file;
+
+          curl = curl_easy_init();
+          file = fopen("file.html","wb");
+          if(curl) {
+            printf("%s\n", action[0].urlAction);
+            /* Désactive les certificats */
+            curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+            curl_easy_setopt(curl, CURLOPT_URL, action[0].urlAction);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA,file);
+
+            /* Forcing HTTP/3 will make the connection fail if the server isn't
+               accessible over QUIC + HTTP/3 on the given host and port.
+               Consider using CURLOPT_ALTSVC instead! */
+            curl_easy_setopt(curl, CURLOPT_HTTP_VERSION, 30);
+
+            /* Perform the request, res will get the return code */
+            res = curl_easy_perform(curl);
+            /* Check for errors */
+            if(res != CURLE_OK)
+              fprintf(stderr, "curl_easy_perform() failed: %s\n",
+                      curl_easy_strerror(res));
+
+            /* always cleanup */
+            curl_easy_cleanup(curl);
+            fclose(file);
+          }
         }
     }
 
@@ -167,8 +199,7 @@ int readFile (Action *action, Tache *tache, int nbrAction, int nbrTache, char *d
 
                             /* Verification de la présence de l'URL */
                             if (data[i] == 'u' && data[i+1] == 'r' && data[i+2] == 'l' && data[i+3] == ' ' && data[i+4] == '-' && data[i+5] == '>' && data[i+6] == ' ') {
-                                printf ("IN");
-                                i += 8;
+                                i += 7;
                                 int allocURL = 0;
                                 j = i;
                                 while (data[j] != '}') {
