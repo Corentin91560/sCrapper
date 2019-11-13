@@ -1,11 +1,11 @@
 =
-{name -> recupsite1}            #action de recup du site
-{url -> https://www.cardmarket.com/fr/YuGiOh}
+{name -> recupsite1}
+{url -> https://thibma.fr/}
 +
-{max-depth -> 0}
+{type -> (img)}
 
 =
-{name -> recupsite2}			#action de recuperation du 1er site
+{name -> recupsite2}            #action de recuperation du 1er site
 {url -> https://thibma.fr/}
 +
 {option1 -> 0}
