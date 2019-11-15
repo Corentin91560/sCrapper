@@ -2,17 +2,31 @@
 {name -> recupsite1}
 {url -> https://thibma.fr/}
 +
-{type -> (img)}
+{type -> (img, xml)}
+{versioning -> on}
 
 =
 {name -> recupsite2}            #action de recuperation du 1er site
 {url -> https://thibma.fr/}
 +
-{option1 -> 0}
+{versioning -> off}
+
+==
+{name -> loul}	        #recup site1 et site2 toute les 12min20s
+{minute -> 2}
+{second -> 3}
+{hour -> 1}
++
+(miam)
+
+=
+{name -> miam}
+{url -> https://thibma.fr/}
 
 ==
 {name -> between recup}	        #recup site1 et site2 toute les 12min20s
-{minute -> 12}
-{seconde ->20}
+{minute -> 23}
+{second -> 30}
+{hour -> 1}
 +
-(recupsite1,recupsite2)
+(recupsite1, recupsite2)
