@@ -46,6 +46,7 @@ int main()
     FILE* config = fopen("config.sconf","rb");
     if (config == NULL) {
         printf("File not open");
+        system("pause");
         return 0;
     }
     long fileLength;
@@ -63,6 +64,7 @@ int main()
 
     if(config == NULL){
         printf("File not open");
+        system("pause");
         return 0;
 
     }

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="main.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="44608" topLine="540" />
+			<Cursor1 position="3686" topLine="113" />
 		</Cursor>
 		<Folding>
-			<Collapse line="144" />
-			<Collapse line="155" />
-			<Collapse line="166" />
-			<Collapse line="324" />
+			<Collapse line="148" />
+			<Collapse line="159" />
+			<Collapse line="170" />
+			<Collapse line="328" />
 		</Folding>
 	</File>
 </CodeBlocks_layout_file>
