@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1573949051 source:c:\dev\c\scrapper\scrapper\main.c
+1574025381 source:c:\dev\c\scrapper\scrapper\main.c
 	<stdio.h>
 	<stdlib.h>
 	<sys/stat.h>
@@ -122,4 +122,43 @@
 	"curl.h"
 
 1568030596 c:\lib\curl\curl-7.66.0\curl-7.66.0\include\curl\typecheck-gcc.h
+
+1572853406 c:\dev\c\scrapper\scrapper\curl-7.67.0-win64-mingw\include\curl\curl.h
+	"curlver.h"
+	"system.h"
+	<stdio.h>
+	<limits.h>
+	<osreldate.h>
+	<sys/types.h>
+	<time.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<sys/select.h>
+	<sys/socket.h>
+	<sys/time.h>
+	<support/SupportDefs.h>
+	"easy.h"
+	"multi.h"
+	"urlapi.h"
+	"typecheck-gcc.h"
+
+1573018754 c:\dev\c\scrapper\scrapper\curl-7.67.0-win64-mingw\include\curl\curlver.h
+
+1571168510 c:\dev\c\scrapper\scrapper\curl-7.67.0-win64-mingw\include\curl\system.h
+	<winsock2.h>
+	<windows.h>
+	<ws2tcpip.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<sys/poll.h>
+
+1571168510 c:\dev\c\scrapper\scrapper\curl-7.67.0-win64-mingw\include\curl\easy.h
+
+1572853406 c:\dev\c\scrapper\scrapper\curl-7.67.0-win64-mingw\include\curl\multi.h
+	"curl.h"
+
+1572853406 c:\dev\c\scrapper\scrapper\curl-7.67.0-win64-mingw\include\curl\urlapi.h
+	"curl.h"
+
+1571168510 c:\dev\c\scrapper\scrapper\curl-7.67.0-win64-mingw\include\curl\typecheck-gcc.h
 

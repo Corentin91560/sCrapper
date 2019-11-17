@@ -1,4 +1,6 @@
+#include <assert.h>
 #include <stdio.h>
+#include <time.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -110,12 +112,28 @@ int main()
     CURLcode res;
     FILE *file;
     int currentdepth=0;
-    mkdir(action[0].nameAction,0777);
 
-    char* folderoffile =strcat(action[0].nameAction,"/file.html");
+    time_t t = time(NULL);
+    struct tm *tm = localtime(&t);
+    char str_time[100];
+    char str_date[100];
+    /** recuperation de la date */
+    t = time(NULL);
+    tm = localtime(&t);
 
+    //strftime(str_time, sizeof(str_time), "%H %M %S", tm);
+    strftime(str_date, sizeof(str_date), "%d %m %Y", tm);
+    /** creation du dossier pour le versionning  */
+    mkdir(strcat(str_date,action[0].nameAction),0777);
+
+    char* folderoffile = malloc(sizeof(char)*50);
+    char* indexfile = malloc(sizeof(char)*50);
+    strcpy(folderoffile,strcat(str_date,"/"));
+    strcpy(indexfile,folderoffile);
+    strcat(indexfile,"index.html");
+    printf("%s\n",indexfile);
     curl = curl_easy_init();
-    file = fopen(folderoffile,"wb");
+    file = fopen(indexfile,"wb");
 
     if(curl) {
         printf("%s\n", action[0].urlAction);
@@ -144,12 +162,13 @@ int main()
         fclose(file);
     }
 
+
 if(action[0].maxDepthOption==0){
 
 }else{
     while(currentdepth!=action[0].maxDepthOption){
 
-    FILE* config2 = fopen(folderoffile,"rb");
+    FILE* config2 = fopen(indexfile,"rb");
     if (config2 == NULL) {
         printf("File not open");
         return 0;
@@ -159,10 +178,9 @@ if(action[0].maxDepthOption==0){
     fileLength2 = ftell(config2);
     char* data2=malloc(sizeof(char)*fileLength2);
     fclose(config2);
-    //printf("%ld", fileLength);
 
     /** Lecture du fichier pour voir ce qu'il contient */
-    config2 = fopen(folderoffile,"r");
+    config2 = fopen(indexfile,"r");
 
     if(config2 == NULL){
         printf("File not open");
@@ -181,30 +199,57 @@ if(action[0].maxDepthOption==0){
 
     for (int i = 0; i < strlen(data2); i++)
 {
-    //printf("%c",data2[i]);
     if(data2[i]=='<' && data2[i+1]=='a' && data2[i+2]==' ' && data2[i+3]=='h' && data2[i+4]=='r' && data2[i+5]=='e' && data2[i+6]=='f' && data2[i+7]=='=' && data2[i+8]=='"' && data2[i+9]!='#' ){
-        //printf("okay");
 
         int k=0;
         int count=0;
         for(int j=i+9;data2[j]!='"';j++){
                 count+=1;
         }
-        printf("%d",count);
         char *newlink ;
-        newlink =malloc(sizeof(char)*(count+1));
-
+        newlink =malloc(sizeof(char)*(count));
         for(int j=i+9;data2[j]!='"';j++){
             newlink[k]=data2[j];
             k+=1;
-
         }
+        newlink[k]='\0';
+        char *newlinkinrep =malloc(sizeof(char)*100);
+        strcpy(newlinkinrep,folderoffile);
+        strcat(newlinkinrep,newlink);
         FILE* filenew;
-        filenew = fopen(newlink,"wb");
+        filenew = fopen(newlinkinrep,"wb");
 
+        CURL *curl;
+        CURLcode res;
+
+        curl = curl_easy_init();
+
+    if(curl) {
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        char* link = malloc(sizeof(char)*50);
+        strcpy(link,action[0].urlAction);
+        strcat(link,newlink);
+        strcat(link,"\0");
+        curl_easy_setopt(curl, CURLOPT_URL, link);
+
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA,filenew);
+
+        //curl_easy_setopt(curl, CURLOPT_HTTP_VERSION, 30);
+        res = curl_easy_perform(curl);
+
+        if(res != CURLE_OK)
+            fprintf(stderr, "curl_easy_perform() failed: %s\n",
+                curl_easy_strerror(res));
+        curl_easy_cleanup(curl);
         fclose(filenew);
-        printf("\n%s",newlink);
+        printf("\n%s",link);
+        free(link);
 
+    }else{
+        fclose(filenew);
+    }
+
+        free(newlink);
 
     }
 }
@@ -212,8 +257,11 @@ currentdepth+=1;
 }
 
 }
-
+    printf("\nPress ENTER key to Continue\n");
+    getchar();
     free(data);
+    free(folderoffile);
+    free(indexfile);
     freeMemory(action, nbrAction, tache, nbrTache);
 
     return 0;
