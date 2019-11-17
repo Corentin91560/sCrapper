@@ -162,11 +162,16 @@ int main()
         fclose(file);
     }
 
+for(int m=0;m<nbrAction;m++){
+        char *stock = malloc(sizeof(char)*50);
+strcpy(stock,str_date);
+strcat(stock,action[m].nameAction);
+mkdir(stock,0777);
 
-if(action[0].maxDepthOption==0){
+if(action[m].maxDepthOption==0){
 
 }else{
-    while(currentdepth!=action[0].maxDepthOption){
+    while(currentdepth!=action[m].maxDepthOption){
 
     FILE* config2 = fopen(indexfile,"rb");
     if (config2 == NULL) {
@@ -192,11 +197,6 @@ if(action[0].maxDepthOption==0){
         data2[i] = fgetc(config2);
     }
     fclose(config2);
-
-
-
-
-
     for (int i = 0; i < strlen(data2); i++)
 {
     if(data2[i]=='<' && data2[i+1]=='a' && data2[i+2]==' ' && data2[i+3]=='h' && data2[i+4]=='r' && data2[i+5]=='e' && data2[i+6]=='f' && data2[i+7]=='=' && data2[i+8]=='"' && data2[i+9]!='#' ){
@@ -214,7 +214,8 @@ if(action[0].maxDepthOption==0){
         }
         newlink[k]='\0';
         char *newlinkinrep =malloc(sizeof(char)*100);
-        strcpy(newlinkinrep,folderoffile);
+        strcpy(newlinkinrep,stock);
+        strcat(newlinkinrep,"/");
         strcat(newlinkinrep,newlink);
         FILE* filenew;
         filenew = fopen(newlinkinrep,"wb");
@@ -227,7 +228,7 @@ if(action[0].maxDepthOption==0){
     if(curl) {
         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, FALSE);
         char* link = malloc(sizeof(char)*50);
-        strcpy(link,action[0].urlAction);
+        strcpy(link,action[m].urlAction);
         strcat(link,newlink);
         strcat(link,"\0");
         curl_easy_setopt(curl, CURLOPT_URL, link);
@@ -256,6 +257,7 @@ if(action[0].maxDepthOption==0){
 currentdepth+=1;
 }
 
+}
 }
     printf("\nPress ENTER key to Continue\n");
     getchar();
